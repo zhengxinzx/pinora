@@ -1,6 +1,9 @@
 // Store all bookmarks for searching
 let allBookmarks = [];
 
+// System folder names to filter
+const SYSTEM_FOLDERS = ['Bookmarks bar', 'Other bookmarks', 'Mobile bookmarks'];
+
 // Initialize the extension
 document.addEventListener('DOMContentLoaded', function() {
   loadBookmarks();
@@ -63,7 +66,7 @@ function displayBookmarks(bookmarks) {
   // Create HTML for grouped bookmarks
   container.innerHTML = '';
   Object.keys(groupedBookmarks).sort().forEach(folder => {
-    if (folder === 'Bookmarks bar' || folder === 'Other bookmarks' || folder === 'Mobile bookmarks') {
+    if (SYSTEM_FOLDERS.includes(folder)) {
       // Skip top-level folders themselves, only show their contents
       return;
     }
@@ -112,10 +115,7 @@ function displayBookmarks(bookmarks) {
   
   // Show ungrouped bookmarks
   const ungrouped = bookmarks.filter(b => 
-    !b.folder || 
-    b.folder === 'Bookmarks bar' || 
-    b.folder === 'Other bookmarks' || 
-    b.folder === 'Mobile bookmarks'
+    !b.folder || SYSTEM_FOLDERS.includes(b.folder)
   );
   
   if (ungrouped.length > 0) {
