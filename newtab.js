@@ -180,7 +180,9 @@ function renderBookmarkNode(node, depth = 0) {
 
     const folderIcon = document.createElement("span");
     folderIcon.className = "folder-icon";
-    folderIcon.innerHTML = isCollapsed ? "📂" : "📁";
+    folderIcon.innerHTML = isCollapsed
+      ? `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 3.5C2 2.67157 2.67157 2 3.5 2H5.87868C6.28579 2 6.67614 2.16789 6.95711 2.46447L7.79289 3.35355C8.07386 3.65013 8.46421 3.81802 8.87132 3.81802H12.5C13.3284 3.81802 14 4.48959 14 5.31802V12.5C14 13.3284 13.3284 14 12.5 14H3.5C2.67157 14 2 13.3284 2 12.5V3.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>`
+      : `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 5.5V12.5C2 13.3284 2.67157 14 3.5 14H12.5C13.3284 14 14 13.3284 14 12.5V5.31802C14 4.48959 13.3284 3.81802 12.5 3.81802H8.87132C8.46421 3.81802 8.07386 3.65013 7.79289 3.35355L6.95711 2.46447C6.67614 2.16789 6.28579 2 5.87868 2H3.5C2.67157 2 2 2.67157 2 3.5V5.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><line x1="2" y1="5.5" x2="14" y2="5.5" stroke="currentColor" stroke-width="1.2"/></svg>`;
 
     const titleText = document.createElement("span");
     titleText.textContent = node.title || "Untitled Folder";
@@ -245,11 +247,11 @@ function toggleFolder(folderId) {
 
     if (collapsedFolders.has(folderId)) {
       icon.textContent = "▶";
-      folderIcon.innerHTML = "📂";
+      folderIcon.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 3.5C2 2.67157 2.67157 2 3.5 2H5.87868C6.28579 2 6.67614 2.16789 6.95711 2.46447L7.79289 3.35355C8.07386 3.65013 8.46421 3.81802 8.87132 3.81802H12.5C13.3284 3.81802 14 4.48959 14 5.31802V12.5C14 13.3284 13.3284 14 12.5 14H3.5C2.67157 14 2 13.3284 2 12.5V3.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>`;
       content.style.display = "none";
     } else {
       icon.textContent = "▼";
-      folderIcon.innerHTML = "📁";
+      folderIcon.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 5.5V12.5C2 13.3284 2.67157 14 3.5 14H12.5C13.3284 14 14 13.3284 14 12.5V5.31802C14 4.48959 13.3284 3.81802 12.5 3.81802H8.87132C8.46421 3.81802 8.07386 3.65013 7.79289 3.35355L6.95711 2.46447C6.67614 2.16789 6.28579 2 5.87868 2H3.5C2.67157 2 2 2.67157 2 3.5V5.5Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><line x1="2" y1="5.5" x2="14" y2="5.5" stroke="currentColor" stroke-width="1.2"/></svg>`;
       content.style.display = "block";
     }
   }
