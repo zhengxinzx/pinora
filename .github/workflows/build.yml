@@ -1,10 +1,7 @@
-name: Build and Package Extension
+name: Build and Release Extension
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
   workflow_dispatch:  # Allows manual triggering
@@ -13,12 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      pull-requests: write  # Required to comment on PRs
+      contents: write  # Required for creating releases
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for tag checking and changelog
 
       - name: Read version from manifest
         id: get_version
@@ -61,15 +59,80 @@ jobs:
           path: pinora-*.zip
           retention-days: 30
 
-      - name: Comment on PR with artifact
-        if: github.event_name == 'pull_request'
-        continue-on-error: true  # Don't fail the build if commenting fails
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '✅ Extension package built successfully! Download the artifact from the Actions tab to test.'
-            })
+      # Release steps - only run on push to main
+      - name: Check if tag exists
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        id: check_tag
+        run: |
+          if git rev-parse "v${{ steps.get_version.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Tag v${{ steps.get_version.outputs.version }} already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Tag v${{ steps.get_version.outputs.version }} does not exist"
+          fi
+
+      - name: Check if release exists
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.check_tag.outputs.exists == 'true'
+        id: check_release
+        run: |
+          if gh release view "v${{ steps.get_version.outputs.version }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Release v${{ steps.get_version.outputs.version }} already exists"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "Release v${{ steps.get_version.outputs.version }} does not exist"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate changelog
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (steps.check_tag.outputs.exists == 'false' || steps.check_release.outputs.exists == 'false')
+        id: changelog
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$PREV_TAG" ]; then
+            echo "changelog=Initial release of Pinora Chrome Extension" >> $GITHUB_OUTPUT
+          else
+            echo "changelog<<EOF" >> $GITHUB_OUTPUT
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
+            echo "" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create tag and release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && (steps.check_tag.outputs.exists == 'false' || steps.check_release.outputs.exists == 'false')
+        run: |
+          # Create tag if it doesn't exist
+          if [ "${{ steps.check_tag.outputs.exists }}" = "false" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git tag -a "v${{ steps.get_version.outputs.version }}" -m "Release v${{ steps.get_version.outputs.version }}"
+            git push origin "v${{ steps.get_version.outputs.version }}"
+            echo "✓ Created tag: v${{ steps.get_version.outputs.version }}"
+          fi
+
+          # Create release notes
+          cat > release-notes.md <<EOF
+          ## Pinora v${{ steps.get_version.outputs.version }}
+
+          ### 📦 Installation
+          1. Download the pinora-${{ steps.get_version.outputs.version }}.zip file
+          2. Extract the zip file
+          3. Open Chrome and navigate to chrome://extensions/
+          4. Enable Developer mode
+          5. Click Load unpacked and select the extracted folder
+
+          ### 📝 Changes
+          ${{ steps.changelog.outputs.changelog }}
+          EOF
+
+          # Create release with the package
+          gh release create "v${{ steps.get_version.outputs.version }}" \
+            pinora-${{ steps.get_version.outputs.version }}.zip \
+            --title "Pinora v${{ steps.get_version.outputs.version }}" \
+            --notes-file release-notes.md
+
+          echo "✓ Created release: v${{ steps.get_version.outputs.version }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
