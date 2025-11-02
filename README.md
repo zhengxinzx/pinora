@@ -7,6 +7,7 @@ A minimalist Chrome extension that replaces the new tab page with a beautiful, o
 - **Tree View Display**: Shows bookmarks in a hierarchical folder structure that mirrors your actual Chrome bookmark organization
 - **Collapsible Folders**: Click folders to expand/collapse them, with state persisted across sessions
 - **Real-time Search**: Quickly find bookmarks by searching titles, URLs, or folder names
+- **Instant Search**: Start typing any letter or number (a-z, A-Z, 0-9) anywhere on the page to automatically search bookmarks
 - **Notion-Inspired Design**: Clean, minimalist interface with subtle colors and refined typography
 - **Theme Support**: Automatically adapts to light or dark mode based on your system/browser settings
 - **Grid Layout**: Bookmarks spread horizontally in an efficient grid while folders take full rows
@@ -48,6 +49,7 @@ Refined dark theme that's easy on the eyes during nighttime browsing.
 - **Browse bookmarks**: Bookmarks are displayed in a tree structure matching your Chrome folders
 - **Expand/collapse folders**: Click on any folder to toggle its contents
 - **Search**: Type in the search box to filter bookmarks by name, URL, or folder
+- **Instant search**: Start typing any alphanumeric character (a-z, A-Z, 0-9) anywhere on the page to automatically begin searching
 - **Quick search**: Press `/` to instantly focus the search box
 - **Navigate**: Click any bookmark to open it in the current tab
 
