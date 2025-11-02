@@ -5,32 +5,55 @@
   box-sizing: border-box;
 }
 
+/* ========================================
+   Theme Variables
+   ======================================== */
+
 /* Light theme (default) */
 :root {
   --bg-color: #ffffff;
-  --text-color: #333333;
-  --search-bg: #f5f5f5;
-  --search-border: #dddddd;
-  --bookmark-hover: #f0f0f0;
-  --folder-color: #666666;
-  --link-color: #1a73e8;
+  --text-color: #37352f;
+  --text-secondary: #787774;
+  --search-bg: #f7f6f3;
+  --search-border: #e9e7e4;
+  --bookmark-hover: #f7f6f3;
+  --bookmark-bg: #ffffff;
+  --folder-color: #787774;
+  --link-color: #2383e2;
+  --border-color: #e9e7e4;
 }
 
 /* Dark theme based on system preference */
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg-color: #1e1e1e;
-    --text-color: #e0e0e0;
-    --search-bg: #2d2d2d;
-    --search-border: #444444;
-    --bookmark-hover: #333333;
-    --folder-color: #aaaaaa;
-    --link-color: #8ab4f8;
+    --bg-color: #191919;
+    --text-color: #e3e2e0;
+    --text-secondary: #9b9a97;
+    --search-bg: #252525;
+    --search-border: #373737;
+    --bookmark-hover: #2f2f2f;
+    --bookmark-bg: #252525;
+    --folder-color: #9b9a97;
+    --link-color: #529cca;
+    --border-color: #373737;
+  }
+
+  .bookmark-item:hover {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   }
 }
 
+/* ========================================
+   Base Layout
+   ======================================== */
+
+/* ========================================
+   Base Layout
+   ======================================== */
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
   min-height: 100vh;
@@ -43,6 +66,14 @@ body {
   padding: 40px 20px;
 }
 
+/* ========================================
+   Search Components
+   ======================================== */
+
+/* ========================================
+   Search Components
+   ======================================== */
+
 .search-container {
   margin-bottom: 30px;
   text-align: center;
@@ -51,60 +82,210 @@ body {
 #searchInput {
   width: 100%;
   max-width: 600px;
-  padding: 15px 20px;
-  font-size: 16px;
+  padding: 10px 16px;
+  font-size: 14px;
   background-color: var(--search-bg);
-  border: 1px solid var(--search-border);
-  border-radius: 24px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
   color: var(--text-color);
   outline: none;
-  transition: all 0.3s ease;
+  transition: all 0.15s ease;
+  font-weight: 400;
 }
 
 #searchInput:focus {
+  background-color: var(--bg-color);
   border-color: var(--link-color);
-  box-shadow: 0 0 0 3px var(--search-bg);
+  box-shadow: 0 0 0 2px rgba(35, 131, 226, 0.1);
 }
 
 #searchInput::placeholder {
   color: var(--folder-color);
 }
 
+/* ========================================
+   Bookmark Container
+   ======================================== */
+
+/* ========================================
+   Bookmark Container
+   ======================================== */
+
 .bookmarks-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
 }
+
+/* ========================================
+   Folder Components
+   ======================================== */
+
+/* ========================================
+   Folder Components
+   ======================================== */
 
 .bookmark-folder {
   margin-bottom: 30px;
-  grid-column: 1 / -1;
+  width: 100%;
+}
+
+.folder-header {
+  margin-bottom: 12px;
+  width: 100%;
 }
 
 .folder-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: var(--folder-color);
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--search-border);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.1s ease;
+  display: inline-flex;
+  align-items: center;
+  user-select: none;
+  gap: 6px;
+  width: auto;
 }
+
+.folder-title:hover {
+  background-color: var(--bookmark-hover);
+}
+
+.collapse-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  font-size: 9px;
+  transition: transform 0.15s ease;
+  color: var(--folder-color);
+  opacity: 0.6;
+}
+
+.folder-icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1;
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+
+.folder-content {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 28px;
+  transition: all 0.2s ease;
+  display: block;
+  width: 100%;
+}
+
+.folder-content > .bookmark-item {
+  display: inline-block;
+  width: calc(20% - 6.4px);
+  margin: 0 8px 8px 0;
+  vertical-align: top;
+}
+
+.folder-content > .bookmark-item:nth-child(5n) {
+  margin-right: 0;
+}
+
+.folder-content > .bookmark-folder {
+  display: block;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* ========================================
+   Responsive Folder Layout
+   ======================================== */
+
+/* ========================================
+   Responsive Folder Layout
+   ======================================== */
+
+@media (max-width: 1400px) {
+  .folder-content > .bookmark-item {
+    width: calc(25% - 6px);
+  }
+
+  .folder-content > .bookmark-item:nth-child(5n) {
+    margin-right: 8px;
+  }
+
+  .folder-content > .bookmark-item:nth-child(4n) {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 1000px) {
+  .folder-content > .bookmark-item {
+    width: calc(33.333% - 5.333px);
+  }
+
+  .folder-content > .bookmark-item:nth-child(4n),
+  .folder-content > .bookmark-item:nth-child(5n) {
+    margin-right: 8px;
+  }
+
+  .folder-content > .bookmark-item:nth-child(3n) {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .folder-content > .bookmark-item {
+    width: calc(50% - 4px);
+  }
+
+  .folder-content > .bookmark-item:nth-child(3n),
+  .folder-content > .bookmark-item:nth-child(4n),
+  .folder-content > .bookmark-item:nth-child(5n) {
+    margin-right: 8px;
+  }
+
+  .folder-content > .bookmark-item:nth-child(2n) {
+    margin-right: 0;
+  }
+}
+
+/* ========================================
+   Bookmark List and Items
+   ======================================== */
+
+/* ========================================
+   Bookmark List and Items
+   ======================================== */
 
 .bookmark-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px;
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .bookmark-item {
-  padding: 12px 15px;
-  border-radius: 8px;
-  transition: background-color 0.2s ease;
+  padding: 0;
+  border-radius: 4px;
+  transition: all 0.1s ease;
+  list-style: none;
+  background-color: var(--bookmark-bg);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
 }
 
 .bookmark-item:hover {
   background-color: var(--bookmark-hover);
+  border-color: var(--border-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .bookmark-link {
@@ -112,31 +293,35 @@ body {
   align-items: center;
   text-decoration: none;
   color: var(--text-color);
-  gap: 10px;
+  gap: 8px;
+  padding: 8px 10px;
+  height: 100%;
 }
 
 .bookmark-icon {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
+  opacity: 0.9;
 }
 
 .bookmark-title {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 400;
+  flex: 1;
+  color: var(--text-color);
 }
+
+/* ========================================
+   Utility Classes
+   ======================================== */
 
 .no-results {
   text-align: center;
-  padding: 40px;
+  padding: 60px 20px;
   color: var(--folder-color);
-  font-size: 16px;
-}
-
-/* Folder icon styling */
-.folder-icon {
-  display: inline-block;
-  margin-right: 8px;
+  font-size: 18px;
 }
