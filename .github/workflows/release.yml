@@ -1,0 +1,80 @@
+name: Release Chrome Extension
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Triggers on version tags like v1.0.0, v1.2.3, etc.
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Required to create releases
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Read version from manifest
+        id: get_version
+        run: |
+          VERSION=$(jq -r '.version' manifest.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extension version: $VERSION"
+
+      - name: Create extension package
+        run: |
+          # Create a zip file containing all necessary extension files
+          zip -r pinora-${{ steps.get_version.outputs.version }}.zip \
+            manifest.json \
+            newtab.html \
+            newtab.js \
+            styles.css \
+            icons/ \
+            -x "*.git*" "*.md" "*theme-test.html"
+          
+          echo "Created package: pinora-${{ steps.get_version.outputs.version }}.zip"
+          ls -lh pinora-*.zip
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Get the previous tag
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+          
+          if [ -z "$PREV_TAG" ]; then
+            echo "changelog=Initial release of Pinora Chrome Extension" >> $GITHUB_OUTPUT
+          else
+            echo "changelog<<EOF" >> $GITHUB_OUTPUT
+            git log $PREV_TAG..HEAD --pretty=format:"- %s (%h)" >> $GITHUB_OUTPUT
+            echo "" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: pinora-*.zip
+          body: |
+            ## Pinora v${{ steps.get_version.outputs.version }}
+            
+            ### 📦 Installation
+            1. Download the `pinora-${{ steps.get_version.outputs.version }}.zip` file
+            2. Extract the zip file
+            3. Open Chrome and navigate to `chrome://extensions/`
+            4. Enable "Developer mode"
+            5. Click "Load unpacked" and select the extracted folder
+            
+            ### 📝 Changes
+            ${{ steps.changelog.outputs.changelog }}
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pinora-extension
+          path: pinora-*.zip
+          retention-days: 90
