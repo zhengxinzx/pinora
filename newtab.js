@@ -150,19 +150,10 @@ function renderBookmarkNode(node, depth = 0) {
     link.href = node.url;
     link.className = "bookmark-link";
 
-    const icon = document.createElement("img");
-    icon.className = "bookmark-icon";
-    icon.src = `chrome://favicon/${node.url}`;
-    icon.alt = "";
-    icon.onerror = function () {
-      this.style.display = "none";
-    };
-
     const title = document.createElement("span");
     title.className = "bookmark-title";
     title.textContent = node.title || "Untitled";
 
-    link.appendChild(icon);
     link.appendChild(title);
     listItem.appendChild(link);
 
@@ -315,20 +306,10 @@ function displayBookmarks(bookmarks) {
       link.href = bookmark.url;
       link.className = "bookmark-link";
 
-      // Create favicon
-      const icon = document.createElement("img");
-      icon.className = "bookmark-icon";
-      icon.src = `chrome://favicon/${bookmark.url}`;
-      icon.alt = "";
-      icon.onerror = function () {
-        this.style.display = "none";
-      };
-
       const title = document.createElement("span");
       title.className = "bookmark-title";
       title.textContent = bookmark.title;
 
-      link.appendChild(icon);
       link.appendChild(title);
       listItem.appendChild(link);
       bookmarkList.appendChild(listItem);
