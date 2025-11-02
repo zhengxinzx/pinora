@@ -170,10 +170,17 @@ body {
 .folder-icon {
   display: inline-flex;
   align-items: center;
-  font-size: 16px;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
   line-height: 1;
-  filter: grayscale(100%);
-  opacity: 0.5;
+  color: var(--folder-color);
+  opacity: 0.4;
+  transition: opacity 0.15s ease;
+}
+
+.folder-title:hover .folder-icon {
+  opacity: 0.6;
 }
 
 .folder-content {
