@@ -1,156 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pinora Theme Test</title>
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    .theme-toggle {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 10px 20px;
-      background: var(--search-bg);
-      border: 1px solid var(--search-border);
-      border-radius: 8px;
-      color: var(--text-color);
-      cursor: pointer;
-      font-size: 14px;
-    }
-    
-    .instructions {
-      background: var(--search-bg);
-      border: 1px solid var(--search-border);
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 30px;
-      color: var(--text-color);
-    }
-    
-    .instructions h2 {
-      margin-bottom: 10px;
-      font-size: 18px;
-    }
-    
-    .instructions p {
-      margin-bottom: 10px;
-      line-height: 1.6;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <div class="instructions">
-      <h2>Theme Test Page</h2>
-      <p><strong>Light/Dark Theme Support:</strong> This page demonstrates Pinora's automatic theme switching based on your system preferences.</p>
-      <p>To test:</p>
-      <ul style="margin-left: 20px; line-height: 1.8;">
-        <li>On <strong>macOS</strong>: Go to System Preferences → General → Appearance and switch between Light/Dark</li>
-        <li>On <strong>Windows</strong>: Go to Settings → Personalization → Colors and change the theme</li>
-        <li>On <strong>Linux</strong>: Change your system theme settings</li>
-        <li><strong>Browser override</strong>: In Chrome DevTools (F12) → click the three dots → More tools → Rendering → Emulate CSS media feature "prefers-color-scheme"</li>
-      </ul>
-      <p>The page should automatically switch between light (white background) and dark (dark background) themes.</p>
-    </div>
-    
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search bookmarks..." autocomplete="off">
-    </div>
-    
-    <div class="bookmarks-container">
-      <!-- Sample bookmarks for demonstration -->
-      <div class="bookmark-folder">
-        <div class="folder-title">Work</div>
-        <ul class="bookmark-list">
-          <li class="bookmark-item">
-            <a href="#" class="bookmark-link" onclick="return false;">
-              <img class="bookmark-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%231a73e8'/%3E%3C/svg%3E" alt="">
-              <span class="bookmark-title">GitHub</span>
-            </a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Pinora theme testing page" />
+    <title>Pinora Theme Test</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .instructions {
+        background: var(--search-bg);
+        border: 1px solid var(--search-border);
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 30px;
+        color: var(--text-color);
+      }
+
+      .instructions h2 {
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      .instructions p {
+        margin-bottom: 10px;
+        line-height: 1.6;
+      }
+
+      .instructions ul {
+        margin-left: 20px;
+        line-height: 1.8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="instructions">
+        <h2>Theme Test Page</h2>
+        <p>
+          <strong>Light/Dark Theme Support:</strong> This page demonstrates
+          Pinora's automatic theme switching based on your system preferences.
+        </p>
+        <p>To test:</p>
+        <ul>
+          <li>
+            On <strong>macOS</strong>: Go to System Preferences → General →
+            Appearance and switch between Light/Dark
           </li>
-          <li class="bookmark-item">
-            <a href="#" class="bookmark-link" onclick="return false;">
-              <img class="bookmark-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23ea4335'/%3E%3C/svg%3E" alt="">
-              <span class="bookmark-title">Gmail</span>
-            </a>
+          <li>
+            On <strong>Windows</strong>: Go to Settings → Personalization →
+            Colors and change the theme
           </li>
-          <li class="bookmark-item">
-            <a href="#" class="bookmark-link" onclick="return false;">
-              <img class="bookmark-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%2334a853'/%3E%3C/svg%3E" alt="">
-              <span class="bookmark-title">Google Docs</span>
-            </a>
+          <li>On <strong>Linux</strong>: Change your system theme settings</li>
+          <li>
+            <strong>Browser override</strong>: In Chrome DevTools (F12) → click
+            the three dots → More tools → Rendering → Emulate CSS media feature
+            "prefers-color-scheme"
           </li>
         </ul>
+        <p>
+          The page should automatically switch between light (white background)
+          and dark (dark background) themes.
+        </p>
       </div>
-      
-      <div class="bookmark-folder">
-        <div class="folder-title">Social</div>
-        <ul class="bookmark-list">
-          <li class="bookmark-item">
-            <a href="#" class="bookmark-link" onclick="return false;">
-              <img class="bookmark-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%231da1f2'/%3E%3C/svg%3E" alt="">
-              <span class="bookmark-title">Twitter</span>
-            </a>
-          </li>
-          <li class="bookmark-item">
-            <a href="#" class="bookmark-link" onclick="return false;">
-              <img class="bookmark-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%234267B2'/%3E%3C/svg%3E" alt="">
-              <span class="bookmark-title">Facebook</span>
-            </a>
-          </li>
-        </ul>
+
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search bookmarks..."
+          autocomplete="off"
+          aria-label="Search bookmarks"
+        />
       </div>
-      
-      <div class="bookmark-folder">
-        <div class="folder-title">Development</div>
-        <ul class="bookmark-list">
-          <li class="bookmark-item">
-            <a href="#" class="bookmark-link" onclick="return false;">
-              <img class="bookmark-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23ff5722'/%3E%3C/svg%3E" alt="">
-              <span class="bookmark-title">Stack Overflow</span>
-            </a>
-          </li>
-          <li class="bookmark-item">
-            <a href="#" class="bookmark-link" onclick="return false;">
-              <img class="bookmark-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23f7df1e'/%3E%3C/svg%3E" alt="">
-              <span class="bookmark-title">MDN Web Docs</span>
-            </a>
-          </li>
-          <li class="bookmark-item">
-            <a href="#" class="bookmark-link" onclick="return false;">
-              <img class="bookmark-icon" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%2361dafb'/%3E%3C/svg%3E" alt="">
-              <span class="bookmark-title">React Docs</span>
-            </a>
-          </li>
-        </ul>
+
+      <div class="bookmarks-container">
+        <!-- Sample bookmarks for demonstration -->
+        <div class="bookmark-folder">
+          <div class="folder-title">Work</div>
+          <ul class="bookmark-list">
+            <li class="bookmark-item">
+              <a
+                href="#work-github"
+                class="bookmark-link"
+                onclick="return false;"
+                aria-label="GitHub"
+              >
+                <img
+                  class="bookmark-icon"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%231a73e8'/%3E%3C/svg%3E"
+                  alt=""
+                />
+                <span class="bookmark-title">GitHub</span>
+              </a>
+            </li>
+            <li class="bookmark-item">
+              <a
+                href="#work-gmail"
+                class="bookmark-link"
+                onclick="return false;"
+                aria-label="Gmail"
+              >
+                <img
+                  class="bookmark-icon"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23ea4335'/%3E%3C/svg%3E"
+                  alt=""
+                />
+                <span class="bookmark-title">Gmail</span>
+              </a>
+            </li>
+            <li class="bookmark-item">
+              <a
+                href="#work-docs"
+                class="bookmark-link"
+                onclick="return false;"
+                aria-label="Google Docs"
+              >
+                <img
+                  class="bookmark-icon"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%2334a853'/%3E%3C/svg%3E"
+                  alt=""
+                />
+                <span class="bookmark-title">Google Docs</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bookmark-folder">
+          <div class="folder-title">Social</div>
+          <ul class="bookmark-list">
+            <li class="bookmark-item">
+              <a
+                href="#social-twitter"
+                class="bookmark-link"
+                onclick="return false;"
+                aria-label="Twitter"
+              >
+                <img
+                  class="bookmark-icon"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%231da1f2'/%3E%3C/svg%3E"
+                  alt=""
+                />
+                <span class="bookmark-title">Twitter</span>
+              </a>
+            </li>
+            <li class="bookmark-item">
+              <a
+                href="#social-facebook"
+                class="bookmark-link"
+                onclick="return false;"
+                aria-label="Facebook"
+              >
+                <img
+                  class="bookmark-icon"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%234267B2'/%3E%3C/svg%3E"
+                  alt=""
+                />
+                <span class="bookmark-title">Facebook</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="bookmark-folder">
+          <div class="folder-title">Development</div>
+          <ul class="bookmark-list">
+            <li class="bookmark-item">
+              <a
+                href="#dev-stackoverflow"
+                class="bookmark-link"
+                onclick="return false;"
+                aria-label="Stack Overflow"
+              >
+                <img
+                  class="bookmark-icon"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23ff5722'/%3E%3C/svg%3E"
+                  alt=""
+                />
+                <span class="bookmark-title">Stack Overflow</span>
+              </a>
+            </li>
+            <li class="bookmark-item">
+              <a
+                href="#dev-mdn"
+                class="bookmark-link"
+                onclick="return false;"
+                aria-label="MDN Web Docs"
+              >
+                <img
+                  class="bookmark-icon"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%23f7df1e'/%3E%3C/svg%3E"
+                  alt=""
+                />
+                <span class="bookmark-title">MDN Web Docs</span>
+              </a>
+            </li>
+            <li class="bookmark-item">
+              <a
+                href="#dev-react"
+                class="bookmark-link"
+                onclick="return false;"
+                aria-label="React Docs"
+              >
+                <img
+                  class="bookmark-icon"
+                  src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='8' fill='%2361dafb'/%3E%3C/svg%3E"
+                  alt=""
+                />
+                <span class="bookmark-title">React Docs</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
-  
-  <script>
-    // Simple search functionality for demo
-    document.getElementById('searchInput').addEventListener('input', function(e) {
-      const query = e.target.value.toLowerCase();
-      const items = document.querySelectorAll('.bookmark-item');
-      const folders = document.querySelectorAll('.bookmark-folder');
-      
-      items.forEach(item => {
-        const text = item.textContent.toLowerCase();
-        if (text.includes(query)) {
-          item.style.display = '';
-        } else {
-          item.style.display = 'none';
-        }
-      });
-      
-      // Hide empty folders
-      folders.forEach(folder => {
-        const visibleItems = Array.from(folder.querySelectorAll('.bookmark-item'))
-          .filter(item => item.style.display !== 'none');
-        folder.style.display = visibleItems.length > 0 ? '' : 'none';
-      });
-    });
-  </script>
-</body>
+
+    <script>
+      // Simple search functionality for demo
+      document
+        .getElementById("searchInput")
+        .addEventListener("input", function (e) {
+          const query = e.target.value.toLowerCase();
+          const items = document.querySelectorAll(".bookmark-item");
+          const folders = document.querySelectorAll(".bookmark-folder");
+
+          items.forEach((item) => {
+            const text = item.textContent.toLowerCase();
+            item.style.display = text.includes(query) ? "" : "none";
+          });
+
+          // Hide empty folders
+          folders.forEach((folder) => {
+            const visibleItems = Array.from(
+              folder.querySelectorAll(".bookmark-item")
+            ).filter((item) => item.style.display !== "none");
+            folder.style.display = visibleItems.length > 0 ? "" : "none";
+          });
+        });
+    </script>
+  </body>
 </html>
