@@ -361,6 +361,27 @@ function setupSearch() {
       searchInput.focus();
     }
   });
+
+  // Auto-focus search box when typing alphanumeric characters (a-z, A-Z, 0-9)
+  // This allows users to start typing anywhere on the page to search bookmarks
+  document.addEventListener("keydown", function (e) {
+    // Skip if already focused on search input
+    if (document.activeElement === searchInput) {
+      return;
+    }
+
+    // Only capture alphanumeric characters (a-z, 0-9)
+    const isAlphanumeric = /^[a-z0-9]$/i.test(e.key);
+
+    if (isAlphanumeric) {
+      e.preventDefault();
+      searchInput.focus();
+      // Append the typed character to the search input
+      searchInput.value += e.key;
+      // Trigger input event to activate search
+      searchInput.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+  });
 }
 
 /**
