@@ -36,6 +36,7 @@ build/
 .env
 .env.local
 .env.*.local
+settings.local.json
 
 # Logs
 logs/
