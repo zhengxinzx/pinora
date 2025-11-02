@@ -37,17 +37,22 @@ jobs:
 
       - name: Create extension package
         run: |
-          # Create a zip file containing all necessary extension files
-          zip -r pinora-${{ steps.get_version.outputs.version }}.zip \
-            manifest.json \
-            newtab.html \
-            newtab.js \
-            styles.css \
-            icons/ \
-            -x "*.git*" "*.md" "*theme-test.html"
-          
+          # Create a temporary directory with only extension files
+          mkdir -p package
+          cp manifest.json package/
+          cp newtab.html package/
+          cp newtab.js package/
+          cp styles.css package/
+          cp -r icons package/
+
+          # Create zip from the package directory
+          cd package
+          zip -r ../pinora-${{ steps.get_version.outputs.version }}.zip .
+          cd ..
+
           echo "✓ Created package: pinora-${{ steps.get_version.outputs.version }}.zip"
-          ls -lh pinora-*.zip
+          echo "Package contents:"
+          unzip -l pinora-${{ steps.get_version.outputs.version }}.zip
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
