@@ -14,10 +14,10 @@ A lightweight Chrome extension that replaces your new tab page with a clean, sea
 ## Installation
 
 ### From Chrome Web Store
-*(Coming soon)*
+[Install from Chrome Web Store](https://chromewebstore.google.com/detail/pinora/hedbjopkldonecfiaeffalinndjkmefd?authuser=0&hl=en)
 
 ### From Microsoft Edge Add-ons
-*(Coming soon)*
+[Install from Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/pinora/beibhhboojahlopcpilgnlippknlojmi)
 
 ### Manual Installation (Developer Mode)
 
